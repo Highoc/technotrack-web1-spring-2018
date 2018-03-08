@@ -15,7 +15,17 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from core.views import index
+from topic_manager.views import topic_detail, topic_list, topic_add
+from user_manager.views import user_home
+from ranking.views import ranking
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^$', index),
+    url(r'^topic/(\d+)/$', topic_detail),
+    url(r'^topic/list/$', topic_list),
+    url(r'^topic/add/$', topic_add),
+    url(r'^home/$', user_home),
+    url(r'^ranking/$', ranking),
 ]

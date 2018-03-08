@@ -38,6 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'core.apps.CoreConfig',
+    'topic_manager.apps.TopicmanagerConfig',
+    'user_manager.apps.UserManagerConfig',
+    'ranking.apps.RankingConfig',
 ]
 
 AUTH_USER_MODEL = 'core.User'
