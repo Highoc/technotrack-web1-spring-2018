@@ -37,7 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'core.apps.CoreConfig',
 ]
+
+AUTH_USER_MODEL = 'core.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -77,9 +80,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'TESTBASE',
-	'USER': 'highoc',
-	'PASSWORD': '123456',
-	'HOST': 'localhost'
+	    'USER': 'highoc',
+	    'PASSWORD': '123456',
+	    'HOST': 'localhost'
     }
 }
 
