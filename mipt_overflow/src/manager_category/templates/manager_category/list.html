@@ -1,0 +1,16 @@
+{% extends "core/base.html" %}
+
+{% block TITLE %}
+    This is category_list
+{% endblock %}
+
+
+{% block CONTENT %}
+    <a href="{% url "manager_category:index" %}">back</a>
+    {% for now_category in categories %}
+        <div>
+            [{{ now_category.id }}] {{ now_category.name }}
+            <a href="{% url "manager_category:detail" pk=now_category.id %}">link</a>
+        </div>
+    {% endfor %}
+{% endblock %}

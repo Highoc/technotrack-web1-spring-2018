@@ -1,0 +1,14 @@
+{% extends "core/base.html" %}
+
+{% block TITLE %}
+    This is category_statistics
+{% endblock %}
+
+
+{% block CONTENT %}
+    <a href="{% url "manager_category:detail" pk=category.id %}">back</a><br>
+
+    <div>
+        [{{ category.id }}] {{ category.name }}
+    </div>
+{% endblock %}

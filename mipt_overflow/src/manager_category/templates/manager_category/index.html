@@ -1,0 +1,13 @@
+{% extends "core/base.html" %}
+
+{% block TITLE %}
+    This is category_index
+{% endblock %}
+
+
+{% block CONTENT %}
+    <a href="{% url "manager_user:index" %}">back</a><br>
+    <a href="{% url "manager_category:add" %}">/category/add/</a><br>
+    <a href="{% url "manager_category:list" %}">/category/list</a><br>
+    <a href="{% url "manager_category:list_statistics" %}">/category/list/statistics/</a><br>
+{% endblock %}

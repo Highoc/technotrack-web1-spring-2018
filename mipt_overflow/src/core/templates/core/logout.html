@@ -1,0 +1,11 @@
+{% extends "core/base.html" %}
+
+{% block TITLE %}
+    This is core_logout
+{% endblock %}
+
+
+{% block CONTENT %}
+    <a href="{% url "core:index" %}">next</a><br>
+    <a href="{% url "manager_user:index" %}">back</a><br>
+{% endblock %}

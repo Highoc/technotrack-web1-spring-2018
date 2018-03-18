@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'comments.apps.CommentsConfig',
+    'core.apps.CoreConfig',
     'manager_category.apps.ManagerCategoryConfig',
     'manager_user.apps.ManagerUserConfig',
     'manager_topic.apps.ManagerTopicConfig',

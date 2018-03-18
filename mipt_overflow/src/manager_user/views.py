@@ -1,13 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-
 from django.shortcuts import render
 
-# Create your views here.
-from django.shortcuts import render, HttpResponse
+def user_index(request):
+    return render(request, 'manager_user/index.html')
 
-def index(reqest):
-    return HttpResponse('This is index')
-
-def user_home(request):
-    return HttpResponse('This is user homepage')
+def user_info(request):
+    return render(request, 'manager_user/info.html')

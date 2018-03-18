@@ -1,0 +1,16 @@
+{% extends "core/base.html" %}
+
+{% block TITLE %}
+    This is topic_detail
+{% endblock %}
+
+
+{% block CONTENT %}
+    <a href="{% url 'manager_category:list'%}">back</a>
+    <a href="{% url "manager_topic:statistics" pk=topic.id %}">statistics</a>
+    <a href="{% url "manager_topic:remove" pk=topic.id %}">remove</a>
+
+    <div>
+        [{{ topic.id }}] {{ topic.name }} :
+    </div>
+{% endblock %}

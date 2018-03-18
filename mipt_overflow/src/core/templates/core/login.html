@@ -1,0 +1,11 @@
+{% extends "core/base.html" %}
+
+{% block TITLE %}
+    This is core_login
+{% endblock %}
+
+
+{% block CONTENT %}
+    <a href="{% url "manager_user:index" %}">next</a><br>
+    <a href="{% url "core:index" %}">back</a><br>
+{% endblock %}
