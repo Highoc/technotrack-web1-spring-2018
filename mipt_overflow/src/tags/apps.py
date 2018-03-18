@@ -4,5 +4,5 @@ from __future__ import unicode_literals
 from django.apps import AppConfig
 
 
-class TopicmanagerConfig(AppConfig):
-    name = 'topic_manager'
+class TagsConfig(AppConfig):
+    name = 'tags'
