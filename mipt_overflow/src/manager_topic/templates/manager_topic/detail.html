@@ -13,4 +13,9 @@
     <div>
         [{{ topic.id }}] {{ topic.name }} :
     </div>
+    {% for now_comment in comments %}
+        <div>
+            {{ now_comment.author.username }} : {{ now_comment.text }}
+        </div>
+    {% endfor %}
 {% endblock %}

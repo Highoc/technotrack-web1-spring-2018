@@ -2,5 +2,11 @@
 from __future__ import unicode_literals
 
 from django.contrib import admin
+from .models import Comment
 
-# Register your models here.
+@admin.register(Comment)
+class TopicAdmin(admin.ModelAdmin):
+    list_display = 'id', 'topic', 'author', 'text', 'comment', 'created', 'updated'
+    search_fields = 'topic', 'author__username'
+    list_filter = 'is_archive',
+    pass
