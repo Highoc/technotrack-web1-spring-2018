@@ -13,9 +13,10 @@
     <div>
         [{{ topic.id }}] {{ topic.name }} :
     </div>
-    {% for now_comment in comments %}
-        <div>
-            {{ now_comment.author.username }} : {{ now_comment.text }}
-        </div>
-    {% endfor %}
+
+    <ul>
+        {% for now_comment in comments %}
+            {% include "manager_topic/widgets/comment_child.html" %}
+        {% endfor %}
+    </ul>
 {% endblock %}

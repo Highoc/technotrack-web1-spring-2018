@@ -1,0 +1,11 @@
+<li> {{ now_comment.author.username }}) {{ now_comment.text }}
+    {% if not now_comment.child_comments == null %}
+        <ul>
+         {% for child in now_comment.child_comments.all %}
+              {% with now_comment=child template_name="manager_topic/widgets/comment_child.html" %}
+                   {% include template_name %}
+              {% endwith %}
+         {% endfor %}
+         </ul>
+    {% endif %}
+</li>

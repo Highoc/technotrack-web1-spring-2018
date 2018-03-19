@@ -6,5 +6,10 @@
 
 
 {% block CONTENT %}
-    <a href="{% url 'manager_user:index' %}">back</a>
+    <a href="{% url 'manager_user:index' %}">back</a><br>
+
+    Topics:<br>
+    {% for now_topic in topics %}
+        [{{ now_topic.id }}] {{ now_topic.name }} <a href="{% url "manager_topic:detail" pk=now_topic.id %}">link</a><br>
+    {% endfor %}
 {% endblock %}

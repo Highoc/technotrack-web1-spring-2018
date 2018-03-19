@@ -5,7 +5,10 @@ from django.shortcuts import render, HttpResponse
 from .models import Topic
 
 def topic_list(request):
-    return render(request, 'manager_topic/list.html')
+    context = {
+        'topics': Topic.objects.all().filter(is_archive=False)
+    }
+    return render(request, 'manager_topic/list.html', context)
 
 def topic_add(request):
     return render(request, 'manager_topic/add.html')
@@ -14,7 +17,7 @@ def topic_detail(request, pk=None):
     topic = Topic.objects.get(id=pk)
     context = {
         'topic': topic,
-        'comments': topic.topic_comments.all().filter(is_archive=False)
+        'comments': topic.topic_comments.all().filter(is_archive=False).filter(comment=None)
     }
     return render(request, 'manager_topic/detail.html', context)
 
