@@ -9,7 +9,7 @@ urlpatterns = [
     ),
 
     url(
-        r'^info/$',
+        r'^add/$',
         topic_add,
         name='add'
     ),

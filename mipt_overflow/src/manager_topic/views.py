@@ -17,7 +17,7 @@ def topic_detail(request, pk=None):
     topic = Topic.objects.get(id=pk)
     context = {
         'topic': topic,
-        'comments': topic.topic_comments.all().filter(is_archive=False).filter(comment=None)
+        'comments': topic.topic_comments.all().filter(is_archive=False).filter(comment=None).order_by('created')
     }
     return render(request, 'manager_topic/detail.html', context)
 

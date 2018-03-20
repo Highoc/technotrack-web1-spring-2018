@@ -7,6 +7,5 @@ from .models import Comment
 @admin.register(Comment)
 class TopicAdmin(admin.ModelAdmin):
     list_display = 'id', 'topic', 'author', 'text', 'comment', 'created', 'updated'
-    search_fields = 'topic', 'author__username'
-    list_filter = 'is_archive',
-    pass
+    search_fields = 'topic__name', 'author__username'
+    list_filter = ['is_archive']
