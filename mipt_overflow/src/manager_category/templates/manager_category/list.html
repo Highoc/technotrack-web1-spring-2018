@@ -1,16 +1,60 @@
 {% extends "core/base.html" %}
 
-{% block TITLE %}
-    This is category_list
-{% endblock %}
-
+{% block TITLE %} Категории - {{ block.super }} {% endblock %}
 
 {% block CONTENT %}
-    <a href="{% url "manager_category:index" %}">back</a>
-    {% for now_category in categories %}
-        <div>
-            [{{ now_category.id }}] {{ now_category.name }}
-            <a href="{% url "manager_category:detail" pk=now_category.id %}">link</a>
+
+    <div class="row mt-2">
+        <div class="col-md-12">
+            <p class="card card-block bg-faded"><a href="{% url "manager_user:index" %}">Назад</a></p>
         </div>
-    {% endfor %}
+    </div>
+
+    {% if user.is_superuser %}
+        <a class="btn btn-primary float-right" href="{% url "manager_category:add" %}" role="button">Добавить категорию</a>
+    {% endif %}
+
+    <h3>Категории</h3>
+
+
+    <div class="row mb-2">
+        <form action="" method="get">
+            <div class="col-md-12">
+                <div class="form-row">
+                    <div class="col">
+                        {{ categories_form.sort }}
+                    </div>
+                    <div class="col">
+                        {{ categories_form.search }}
+                    </div>
+                    <div class="col">
+                        <input class="btn btn-secondary" type="submit" value="Поиск">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="row">
+        {% for category in categories %}
+            <div class="col-md-12">
+                <div class="card mt-1">
+                    <div class="card-body">
+                        <a class="card-link" href="{% url "manager_category:detail" pk=category.id %}">{{ category.name }}</a>
+                        <p>{{ category.description }}</p>
+                        {% if user.is_superuser %}
+                            {% if category.is_hidden %}
+                                <div class="card-link float-right"><a href="{% url 'manager_category:remove' pk=category.id %}">Открыть</a></div><br>
+                            {% else %}
+                                <div class="card-link float-right"><a href="{% url 'manager_category:remove' pk=category.id %}">Скрыть</a></div><br>
+                            {% endif %}
+                            <div class="card-link float-right"><a href="{% url 'manager_category:edit' pk=category.id %}">Редактировать</a></div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="col-md-12">Категории пока пусты</div>
+        {% endfor %}
+    </div>
 {% endblock %}

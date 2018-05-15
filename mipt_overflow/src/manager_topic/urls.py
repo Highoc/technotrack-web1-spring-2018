@@ -1,34 +1,36 @@
 from django.conf.urls import url
 from manager_topic.views import *
+from django.contrib.auth.decorators import login_required
 
 urlpatterns = [
     url(
         r'^list/$',
-        topic_list,
+        login_required(topic_list),
         name='list'
     ),
 
     url(
         r'^add/$',
-        topic_add,
+        login_required(TopicAdd.as_view()),
         name='add'
     ),
 
     url(
+        r'^(?P<pk>\d+)/edit/$',
+        login_required(TopicEdit.as_view()),
+        name='edit'
+    ),
+
+    url(
         r'^(?P<pk>\d+)/detail/$',
-        topic_detail,
+        login_required(topic_detail),
         name='detail'
     ),
 
     url(
         r'^(?P<pk>\d+)/remove/$',
-        topic_remove,
+        login_required(topic_remove),
         name='remove'
     ),
 
-    url(
-        r'^(?P<pk>\d+)/statistics/$',
-        topic_statistics,
-        name='statistics'
-    )
 ]

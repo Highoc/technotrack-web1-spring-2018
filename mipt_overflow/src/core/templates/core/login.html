@@ -1,11 +1,21 @@
 {% extends "core/base.html" %}
 
-{% block TITLE %}
-    This is core_login
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block TITLE %} Login - {{ block.super }}{% endblock %}
+
+{% block CUSTOME_STYLES %}
+    <link href="{% static "bootstrap-4.1.0/docs/4.1/examples/sign-in/signin.css" %}" rel="stylesheet">
 {% endblock %}
 
-
 {% block CONTENT %}
-    <a href="{% url "manager_user:index" %}">next</a><br>
-    <a href="{% url "core:index" %}">back</a><br>
+    <form class="form-signin" action="" method="post">
+        {% csrf_token %}
+        {% crispy form %}
+    </form>
+    <div class="text-black-50 text-md-center">
+        Don't have an account?
+        <a href="{% url "core:register" %}">Sign up</a>
+    </div>
 {% endblock %}

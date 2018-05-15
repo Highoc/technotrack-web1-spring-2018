@@ -1,14 +1,11 @@
 {% extends "core/base.html" %}
 
-{% block TITLE %}
-    This is user_index
-{% endblock %}
-
+{% block TITLE %} Home - {{ block.super }} {% endblock %}
 
 {% block CONTENT %}
-    <a href="{% url "manager_category:index" %}">/category/</a><br>
+    <h1 class="mt-2">Home</h1>
+    <a href="{% url "manager_category:list" %}">/categorys/</a><br>
     <a href="{% url "manager_topic:list" %}">/topic/list</a><br>
     <a href="{% url "manager_topic:add" %}">/topic/add</a><br>
     <a href="{% url "manager_user:info" %}">/user/info/</a><br>
-    <a href="{% url "core:logout" %}">/logout/</a><br>
 {% endblock %}

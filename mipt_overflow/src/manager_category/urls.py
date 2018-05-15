@@ -1,46 +1,35 @@
 from django.conf.urls import url
 from manager_category.views import *
+from django.contrib.auth.decorators import login_required
 
 urlpatterns = [
     url(
-        r'^$',
-        category_index,
-        name='index'
-    ),
-
-    url(
         r'^add/$',
-        category_add,
+        login_required(category_add),
         name='add'
     ),
 
     url(
+      r'^(?P<pk>\d+)/edit/$',
+        login_required(category_edit),
+        name='edit'
+    ),
+
+    url(
         r'^list/$',
-        category_list,
+        login_required(category_list),
         name='list'
     ),
 
     url(
         r'^(?P<pk>\d+)/remove/$',
-        category_remove,
+        login_required(category_remove),
         name='remove'
     ),
 
     url(
         r'^(?P<pk>\d+)/detail/$',
-        category_detail,
+        login_required(category_detail),
         name='detail'
-    ),
-
-    url(
-        r'^(?P<pk>\d+)/statistics/$',
-        category_statistics,
-        name='statistics'
-    ),
-
-    url(
-        r'^list/statistics/$',
-        category_list_statictics,
-        name='list_statistics'
     ),
 ]

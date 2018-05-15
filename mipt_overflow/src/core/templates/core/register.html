@@ -1,11 +1,16 @@
 {% extends "core/base.html" %}
+{% load crispy_forms_tags %}
 
-{% block TITLE %}
-    This is core_register
-{% endblock %}
-
+{% block TITLE %} Signup - {{ block.super }} {% endblock %}
 
 {% block CONTENT %}
-    <a href="{% url "manager_user:index" %}">next</a><br>
-    <a href="{% url "core:index" %}">back</a><br>
+    <div class="row">
+        <div class="col-6">
+            <h1 class="mt-2">Registration</h1>
+            <form action="" method="post" class="form">
+                {% csrf_token %}
+                {% crispy form %}
+            </form>
+        </div>
+    </div>
 {% endblock %}

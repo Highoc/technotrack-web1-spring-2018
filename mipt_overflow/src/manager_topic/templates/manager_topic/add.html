@@ -1,10 +1,18 @@
 {% extends "core/base.html" %}
+{% load crispy_forms_tags %}
 
-{% block TITLE %}
-    This is topic_add
-{% endblock %}
+{% block TITLE %} Создание топика - {{ block.super }} {% endblock %}
 
 
 {% block CONTENT %}
-     <a href="{% url "manager_user:index" %}">back</a><br>
+
+    <div class="row mt-2">
+        <div class="col-md-12">
+            <p class="card card-block bg-faded"><a href="{% url "manager_user:index" %}">Назад</a></p>
+        </div>
+    </div>
+
+    <h3>Создание топика</h3>
+
+    {% crispy form %}
 {% endblock %}

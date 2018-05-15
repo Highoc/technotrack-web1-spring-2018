@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'manager_topic.apps.ManagerTopicConfig',
     'ranking.apps.RankingConfig',
     'tags.apps.TagsConfig',
+    'crispy_forms',
 ]
 
 AUTH_USER_MODEL = 'manager_user.User'
@@ -130,3 +131,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+LOGIN_URL = 'core:login'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

@@ -10,19 +10,19 @@ urlpatterns = [
 
     url(
         r'^login/$',
-        core_login,
+        LoginView.as_view(),
         name='login'
     ),
 
     url(
         r'^logout/$',
-        core_logout,
+        LogoutView.as_view(),
         name='logout'
     ),
 
     url(
         r'^register/$',
-        core_register,
+        SignupView.as_view(),
         name='register'
     ),
 ]

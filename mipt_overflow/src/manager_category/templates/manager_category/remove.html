@@ -1,13 +1,15 @@
 {% extends "core/base.html" %}
 
-{% block TITLE %}
-    This is category_remove
-{% endblock %}
-
+{% block TITLE %} Доступ к категории - {{ block.super }} {% endblock %}
 
 {% block CONTENT %}
-    <a href="{% url 'manager_category:detail' pk=category.id %}">back</a>
-    <div>
-        [{{ category.id }}] {{ category.name }}
+
+    <div class="row mt-2">
+        <div class="col-md-12">
+            <p class="card card-block bg-faded"><a href="{% url 'manager_category:list'%}">Назад</a></p>
+        </div>
     </div>
+
+    <h3>Доступ к категории</h3>
+
 {% endblock %}

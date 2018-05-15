@@ -1,15 +1,90 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.shortcuts import render
+from django.core.urlresolvers import reverse_lazy
+
+from manager_user.models import User
+
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm as OldUserCreationForm
+from django.contrib.auth import login, logout, authenticate
+
+from django.views import generic
+
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Layout, Field, ButtonHolder, Submit
+
 
 def core_index(request):
     return render(request, 'core/index.html')
 
-def core_login(request):
-    return render(request, 'core/login.html')
 
-def core_logout(request):
-    return render(request, 'core/logout.html')
+class UserCreationForm(OldUserCreationForm):
+    class Meta:
+        model = User
+        fields = ('username', 'email')
 
-def core_register(request):
-    return render(request, 'core/register.html')
+class RegistrationForm(UserCreationForm):
+    def __init__(self, *args, **kwargs):
+        super(RegistrationForm, self).__init__(*args, **kwargs)
+
+        self.helper = FormHelper()
+        self.helper.layout = Layout(
+            Field('username'),
+            Field('password1'),
+            Field('password2'),
+            Field('email'),
+            ButtonHolder(
+                Submit('register', 'Signup', css_class='btn-primary')
+            )
+        )
+
+class LoginForm(AuthenticationForm):
+
+    template_name = "core/login.html"
+
+    def __init__(self, *args, **kwargs):
+        super(LoginForm, self).__init__(*args, **kwargs)
+
+        self.helper = FormHelper()
+        self.helper.layout = Layout(
+            Field('username'),
+            Field('password'),
+            ButtonHolder(
+                Submit('login', 'Login', css_class='btn-primary')
+            )
+        )
+
+
+class SignupView(generic.CreateView):
+
+    form_class = RegistrationForm
+    model = User
+    template_name = 'core/register.html'
+    success_url = reverse_lazy('core:login')
+
+    def form_valid(self, form):
+        form.save()
+        return super(SignupView, self).form_valid(form)
+
+class LoginView(generic.FormView):
+        form_class = LoginForm
+        success_url = reverse_lazy('manager_user:index')
+        template_name = 'core/login.html'
+
+        def form_valid(self, form):
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = authenticate(username=username, password=password)
+
+            if user is not None and user.is_active:
+                login(self.request, user)
+                return super(LoginView, self).form_valid(form)
+            else:
+                return self.form_invalid(form)
+
+class LogoutView(generic.RedirectView):
+    url = reverse_lazy('core:index')
+
+    def get(self, request, *args, **kwargs):
+        logout(request)
+        return super(LogoutView, self).get(request, *args, **kwargs)

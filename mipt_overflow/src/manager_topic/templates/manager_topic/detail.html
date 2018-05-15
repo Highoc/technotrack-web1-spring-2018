@@ -1,22 +1,39 @@
 {% extends "core/base.html" %}
 
-{% block TITLE %}
-    This is topic_detail
-{% endblock %}
+{% block TITLE %} Топик - {{ block.super }} {% endblock %}
 
 
 {% block CONTENT %}
-    <a href="{% url 'manager_category:list'%}">back</a>
-    <a href="{% url "manager_topic:statistics" pk=topic.id %}">statistics</a>
-    <a href="{% url "manager_topic:remove" pk=topic.id %}">remove</a>
 
-    <div>
-        [{{ topic.id }}] {{ topic.name }} :
+    <div class="row mt-2">
+        <div class="col-md-12">
+            <p class="card card-block bg-faded"><a href="{% url 'manager_category:list'%}">Назад</a></p>
+        </div>
     </div>
+
+    <h3>Топик "{{topic.name}}"</h3>
+
+    <div class="row my-2">
+        <div class="col-md-12">
+            <div class="card mt-1">
+                <div class="card-body">
+                    <p>{{ topic.text }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h3>Комментарии</h3>
 
     <ul>
         {% for now_comment in comments %}
             {% include "manager_topic/widgets/comment_child.html" %}
         {% endfor %}
     </ul>
+
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ comment_form }}
+        <input type="submit" value="add comment">
+    </form>
 {% endblock %}

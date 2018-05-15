@@ -1,13 +1,14 @@
 {% extends "core/base.html" %}
 
-{% block TITLE %}
-    This is topic_remove
-{% endblock %}
+{% block TITLE %}Доступ к топику - {{ block.super }} {% endblock %}
 
 
 {% block CONTENT %}
-    <a href="{% url 'manager_topic:detail' pk=topic.id %}">back</a>
-    <div>
-        [{{ topic.id }}] {{ topic.name }}
+      <div class="row mt-2">
+        <div class="col-md-12">
+            <p class="card card-block bg-faded"><a href="{% url 'manager_user:index'%}">Назад</a></p>
+        </div>
     </div>
+
+    <h3>Доступ к топику</h3>
 {% endblock %}
