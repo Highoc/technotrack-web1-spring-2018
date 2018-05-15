@@ -1,4 +1,5 @@
 {% extends "core/base.html" %}
+{% load static %}
 
 {% block TITLE %} Топик - {{ block.super }} {% endblock %}
 
@@ -23,13 +24,28 @@
         </div>
     </div>
 
+    <h3>В категориях</h3>
+    <div class="row my-2">
+        <div class="col-md-12">
+            {% for category in topic.categories.all %}
+                {% if not forloop.first %},{%endif%}
+                <a href="{% url "manager_category:detail" pk=category.id %}">{{ category.name }}</a>
+            {% endfor %}
+        </div>
+    </div>
+
+
     <h3>Комментарии</h3>
 
-    <ul>
-        {% for now_comment in comments %}
-            {% include "manager_topic/widgets/comment_child.html" %}
-        {% endfor %}
-    </ul>
+    <div class="row my-2">
+        <div class="col-md-12">
+            <ul class="media-list">
+                {% for now_comment in comments %}
+                    {% include "manager_topic/widgets/comment_child.html" %}
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
 
     <form action="" method="post">
         {% csrf_token %}

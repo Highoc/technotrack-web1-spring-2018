@@ -1,9 +1,21 @@
-<li> {{ now_comment.author.username }}) {{ now_comment.text }}
-    {% if not now_comment.child_comments == null %}
-        <ul>
+{% load static %}
+
+<li class="media">
+    <div class="media-body">
+        <div class="media-heading">
+            <h6>Автор: {{ now_comment.author.username }}</h6>
+            <h6 class="text-muted">Добавлено: {{ now_comment.updated }}</h6>
+        </div>
+        <a class="btn btn-outline-secondary float-right" href="#" role="button">Ответить</a>
+
+        <div class="media-text">{{ now_comment.text }}</div><hr>
+
+        {% if not now_comment.child_comments == null %}
+        <ul class="media-list">
             {% for child in now_comment.child_comments.all %}
                 {% include "manager_topic/widgets/comment_child.html" with now_comment=child %}
             {% endfor %}
          </ul>
-    {% endif %}
+        {% endif %}
+    </div>
 </li>
