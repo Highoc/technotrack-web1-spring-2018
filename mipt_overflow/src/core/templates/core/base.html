@@ -16,10 +16,10 @@
     <!-- Custom styles for this template -->
     {% block CUSTOME_STYLES %}{% endblock %}
     <link href="{% static "bootstrap-4.1.0/docs/4.1/examples/sticky-footer-navbar/sticky-footer-navbar.css" %}" rel="stylesheet">
+    <link href="{% static "chosen-1.8.5/bootstrap-chosen.css" %}" rel="stylesheet">
   </head>
 
   <body>
-
     <header>
       <!-- Fixed navbar -->
       <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
@@ -67,8 +67,9 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="{% static "bootstrap-4.1.0/assets/js/vendor/jquery-slim.min.js" %}"></script>
+    <script src="{% static "bootstrap-4.1.0/assets/js/vendor/jquery-3.3.1.min.js" %}"></script>
     <script src="{% static "bootstrap-4.1.0/assets/js/vendor/popper.min.js" %}"></script>
     <script src="{% static "bootstrap-4.1.0/dist/js/bootstrap.min.js" %}"></script>
+    <script src="{% static "my_scripts.js" %}"></script>
   </body>
 </html>

@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'manager_topic.apps.ManagerTopicConfig',
     'ranking.apps.RankingConfig',
     'tags.apps.TagsConfig',
+    'like.apps.LikeConfig',
     'crispy_forms',
 ]
 

@@ -1,5 +1,6 @@
 {% extends "core/base.html" %}
 {% load static %}
+{% load crispy_forms_tags %}
 
 {% block TITLE %} Топик - {{ block.super }} {% endblock %}
 
@@ -12,8 +13,14 @@
         </div>
     </div>
 
-    <h3>Топик "{{topic.name}}"</h3>
+    <div class="float-right">
+        <form class="like-form" method="post" data-url="{% url "manager_topic:like_add" pk=topic.id %}">
+            {% csrf_token %}
+            <input type="submit" class="btn btn-secondary" value="Лайк">
+        </form>
+    </div>
 
+    <h3>Топик "{{topic.name}}"</h3>
     <div class="row my-2">
         <div class="col-md-12">
             <div class="card mt-1">
@@ -24,32 +31,50 @@
         </div>
     </div>
 
+    <div class="float-right autoload" data-url="{% url "manager_topic:likes" pk=topic.id %}">
+    </div>
+
     <h3>В категориях</h3>
     <div class="row my-2">
         <div class="col-md-12">
-            {% for category in topic.categories.all %}
-                {% if not forloop.first %},{%endif%}
-                <a href="{% url "manager_category:detail" pk=category.id %}">{{ category.name }}</a>
-            {% endfor %}
+            <div class="card mt-1">
+                <div class="card-body">
+                {% for category in topic.categories.all %}
+                    {% if not forloop.first %},{%endif%}
+                    <a href="{% url "manager_category:detail" pk=category.id %}">{{ category.name }}</a>
+                {% endfor %}
+                </div>
+            </div>
         </div>
     </div>
 
 
     <h3>Комментарии</h3>
-
     <div class="row my-2">
         <div class="col-md-12">
-            <ul class="media-list">
-                {% for now_comment in comments %}
-                    {% include "manager_topic/widgets/comment_child.html" %}
-                {% endfor %}
-            </ul>
+            <div class="autoload" data-url="{% url "manager_topic:comments" pk=topic.id %}">
+            </div>
         </div>
     </div>
 
-    <form action="" method="post">
-        {% csrf_token %}
-        {{ comment_form }}
-        <input type="submit" value="add comment">
-    </form>
+    <h3>Ваш комментарий</h3>
+    {% crispy comment_form %}
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Ответить</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <form class="ajax-add-comment" method="post" action="">
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 {% endblock %}
