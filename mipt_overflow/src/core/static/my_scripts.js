@@ -42,5 +42,11 @@ $(document).ready(
             );
             return false;
         });
+
+        $('.selectmultiple').each( function () {
+            $(this).attr('class', 'chosen-select');
+        });
+
+        $('.chosen-select').chosen();
     }
 )
