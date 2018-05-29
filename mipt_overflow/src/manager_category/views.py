@@ -7,7 +7,11 @@ from .models import Category
 from django.forms import ModelForm
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
+from django.core.cache import caches
+from like.models import Like
+from django.db.models import Q
 
+cache = caches['default']
 
 def category_list(request):
 
@@ -24,6 +28,7 @@ def category_list(request):
         if data['search']:
             categories = categories.filter(name__icontains=data['search'])
 
+
     context = {
         'categories': categories,
         'categories_form': form,
@@ -35,6 +40,17 @@ def category_list(request):
 def category_detail(request, pk=None):
     category = get_object_or_404(Category, id=pk)
     topics = category.topics.all().filter(is_archive=False)
+
+    topics = topics.annotate_everything()
+
+    for topic in topics:
+        cache_key = 'post{}likescount'.format(topic.id)
+        likes_count = cache.get(cache_key)
+
+        if likes_count is None:
+            likes_count = Like.objects.filter(Q(topic=topic)&Q(is_archive=False)).count()
+            cache.set(cache_key, likes_count, 10)
+        topic.likes_count = likes_count
 
     form = TopicSortForm(request.GET)
     if form.is_valid():
@@ -117,7 +133,7 @@ class CategorySortForm(forms.Form):
     sort = forms.ChoiceField(
         choices=(
             ('name', 'По теме'),
-            ('rate', 'По рейтингу'),
+            ('-likes_count', 'По рейтингу'),
             ('id', 'По ID'),
             ('-created', 'По дате создания'),
         ),
@@ -150,7 +166,7 @@ class TopicSortForm(forms.Form):
     sort = forms.ChoiceField(
         choices=(
             ('name', 'По имени'),
-            ('rate', 'По рейтингу'),
+            ('-likes_count', 'По рейтингу'),
             ('id', 'По ID'),
             ('-created', 'По дате создания'),
         ),

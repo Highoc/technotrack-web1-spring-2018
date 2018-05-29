@@ -6,6 +6,17 @@ from django.conf import settings
 
 from manager_category.models import Category
 
+class TopicQueryset(models.QuerySet):
+
+    def annotate_everything(self):
+        qs = self.select_related("author")
+        qs = qs.prefetch_related("categories", "topic_likes", "topic_likes__author")
+        #qs = qs.annotate(likes_count=models.Count('topic_likes'))
+        return qs
+
+    def get_stats(self):
+        return self.aggregate(all_topic_count=models.Count('id'))
+
 class Topic(models.Model):
 
     author = models.ForeignKey(
@@ -44,6 +55,18 @@ class Topic(models.Model):
         auto_now=True,
         verbose_name='Дата обновления'
     )
+
+    is_published = models.BooleanField(
+        default=False,
+        verbose_name="Опубликовано?"
+    )
+
+    viewcount = models.IntegerField(
+        default=0,
+        verbose_name='Просмотры'
+    )
+
+    objects = TopicQueryset.as_manager()
 
     class Meta:
         verbose_name = 'Топик'

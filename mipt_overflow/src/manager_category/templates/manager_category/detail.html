@@ -1,4 +1,5 @@
 {% extends "core/base.html" %}
+{% load cache %}
 
 {% block TITLE %} Категория - {{ block.super }} {% endblock %}
 
@@ -11,8 +12,7 @@
         </div>
     </div>
 
-    <h3>Категория "{{category.name}}"</h3>
-
+    <h3>Категория "{{category.name}}" (всего {{ topics.get_stats.all_topic_count }} топиков)</h3>
     <div class="row my-2">
         <div class="col-md-12">
             <div class="card mt-1">
@@ -51,6 +51,31 @@
                 <div class="card mt-1">
                     <div class="card-body">
                         <a class="card-link" href="{% url "manager_topic:detail" pk=topic.id %}">{{ topic.name }}</a>
+                        <hr>
+                        <div>
+                            Автор: <i>{{ topic.author.username }}</i>
+                        </div>
+
+                        <div>
+                            В категориях:
+                            {% for now_category in topic.categories.all %}
+                                {% if not forloop.first %},{%endif%}
+                                <i><a href="{% url "manager_category:detail" pk=now_category.id %}">{{ now_category.name }}</a></i>
+                            {% endfor %}
+                        </div>
+                        <hr>
+                        <div>
+                            Понравилось ({{ topic.likes_count }}):
+                            {% for like in topic.topic_likes.all %}
+                                {% if not forloop.first %},{%endif%}
+                                <i>{{ like.author.username }}</i>
+                            {% empty %}
+                                пока никому
+                            {% endfor %}
+                        </div>
+                        <div>
+                            Посмотрело {% cache 5 "viewcount" topic.id %} {{ topic.viewcount }} {% endcache %} человек
+                        </div>
                         {% if user.is_superuser or topic.author == user %}
                             {% if category.is_hidden %}
                                 <div class="card-link float-right"><a href="{% url 'manager_topic:remove' pk=category.id %}">Открыть</a></div><br>

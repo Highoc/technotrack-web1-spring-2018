@@ -31,8 +31,7 @@
         </div>
     </div>
 
-    <div class="float-right autoload" data-url="{% url "manager_topic:likes" pk=topic.id %}">
-    </div>
+    <h3 class="float-right">Счетчик лайков: <span class="autoload" data-url="{% url "manager_topic:likes" pk=topic.id %}"></span></h3>
 
     <h3>В категориях</h3>
     <div class="row my-2">
@@ -47,7 +46,7 @@
             </div>
         </div>
     </div>
-
+    <h3 class="float-right">Счетчик просмотров: {{ topic.viewcount }}</h3>
 
     <h3>Комментарии</h3>
     <div class="row my-2">

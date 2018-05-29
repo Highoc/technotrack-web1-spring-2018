@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'tags.apps.TagsConfig',
     'like.apps.LikeConfig',
     'crispy_forms',
+    'debug_toolbar',
 ]
 
 AUTH_USER_MODEL = 'manager_user.User'
@@ -58,7 +59,19 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
+
+INTERNAL_IPS = [
+    '127.0.0.1'
+]
+
+CASHES = {
+    'default' : {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',
+    }
+}
 
 ROOT_URLCONF = 'application.urls'
 

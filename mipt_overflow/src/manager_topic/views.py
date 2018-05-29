@@ -10,6 +10,7 @@ from django.forms import ModelForm
 from comments.models import Comment
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
+from django.db import models
 
 
 def topic_list(request):
@@ -40,13 +41,17 @@ def topic_detail(request, pk=None):
     topic = get_object_or_404(Topic, id=pk)
     form = CommentForm(request.POST)
 
-    if form.is_valid():
-        comment = form.save(commit=False)
-        comment.author = request.user
-        comment.topic_id = pk
+    if request.method == "GET":
+        Topic.objects.filter(id=pk).update(viewcount=models.F('viewcount') + 1)
 
-        comment.save()
-        form = CommentForm()
+    elif request.method == "POST":
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.author = request.user
+            comment.topic_id = pk
+
+            comment.save()
+            form = CommentForm()
 
     context = {
         'topic': topic,
