@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
-import os
+import os, sys
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -93,7 +93,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'application.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
@@ -102,11 +101,15 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'DB_MIPT_OVERFLOW',
 	    'USER': 'highoc',
-	    'PASSWORD': '123456',
+	    'PASSWORD': 'Ssdawz5566__',
 	    'HOST': 'localhost'
     }
 }
 
+TESTING = 'test' in sys.argv
+
+if TESTING:
+    DATABASES['default'] = {'ENGINE': 'django.db.backends.sqlite3'}
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
@@ -144,7 +147,17 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
-STATIC_URL = '/static/'
 LOGIN_URL = 'core:login'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+# STATIC_ROOT = os.path.join(BASE_DIR, 'storage', 'static')
+STATIC_URL = '/static/'
+
+# STATICFILES_STORAGE = 'django.core.files.storage.FileSystemStorage'
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+AWS_S3_ENDPOINT_URL = 'http://hb.bizmrg.com/'
+AWS_ACCESS_KEY_ID = 'quZTPp3V28P7V1SGJRXxvs'
+AWS_SECRET_ACCESS_KEY = '7arUgwahLMmhHpreUJh9RTkHB7LdD5UNcTjA5VLSP59G'
+AWS_STORAGE_BUCKET_NAME = 'miptoverflow'

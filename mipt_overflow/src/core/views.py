@@ -4,6 +4,10 @@ from django.shortcuts import render
 from django.core.urlresolvers import reverse_lazy
 
 from manager_user.models import User
+from manager_user.models import File
+
+from django.core.serializers import serialize
+from django.http.response import HttpResponse, JsonResponse
 
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm as OldUserCreationForm
 from django.contrib.auth import login, logout, authenticate
@@ -16,6 +20,10 @@ from crispy_forms.layout import Layout, Field, ButtonHolder, Submit
 
 def core_index(request):
     return render(request, 'core/index.html')
+
+def get_file(request, key):
+    file = File.objects.all().filter(owners=request.user, key=key)
+    return HttpResponse(serialize('json', file), content_type='application/json')
 
 
 class UserCreationForm(OldUserCreationForm):

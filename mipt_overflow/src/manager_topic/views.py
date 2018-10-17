@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from django.shortcuts import render, get_object_or_404, reverse, HttpResponse
+import time
 from django import forms
 from django.views.generic import CreateView, UpdateView, DetailView
 from .models import Topic
@@ -12,7 +13,10 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 from django.db import models
 
+from jsonrpc import jsonrpc_method
+from django.core.serializers import serialize
 
+@jsonrpc_method('api.topic_list')
 def topic_list(request):
     topics = Topic.objects.all()
 
@@ -33,9 +37,11 @@ def topic_list(request):
         'topics_form': form,
     }
 
-    return render(request, 'manager_topic/list.html', context)
+    return HttpResponse(serialize('json', context['topics']), content_type="application/json")
+    #return HttpResponse(serialize('json', context['topics']), content_type="application/json")
+    #return render(request, 'manager_topic/list.html', context)
 
-
+@jsonrpc_method('api.topic_detail')
 def topic_detail(request, pk=None):
 
     topic = get_object_or_404(Topic, id=pk)
@@ -53,15 +59,21 @@ def topic_detail(request, pk=None):
             comment.save()
             form = CommentForm()
 
+
+
     context = {
         'topic': topic,
         'comment_form': form,
         'comments': topic.topic_comments.all().filter(is_archive=False).filter(comment=None).order_by('created')
     }
 
+    print(context)
+
+    #return HttpResponse(serialize('json', topic), content_type="application/json")
     return render(request, 'manager_topic/detail.html', context)
 
 
+@jsonrpc_method('api.topic_remove')
 def topic_remove(request, pk=None):
 
     topic = get_object_or_404(Topic, id=pk, author=request.user)
@@ -69,6 +81,8 @@ def topic_remove(request, pk=None):
     context = {
         'topic': topic
     }
+
+    #return HttpResponse(serialize('json', context['topic']), content_type="application/json")
     return render(request, 'manager_topic/remove.html', context)
 
 
@@ -217,3 +231,7 @@ def topic_comment_add(request, pk=None, parent_id=None):
     }
 
     return render(request, 'manager_topic/widgets/comment_add.html', context)
+
+def get_200():
+    time.sleep(10)
+    return 200;

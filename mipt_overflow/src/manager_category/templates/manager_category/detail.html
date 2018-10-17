@@ -67,8 +67,10 @@
                         <div>
                             Понравилось ({{ topic.likes_count }}):
                             {% for like in topic.topic_likes.all %}
-                                {% if not forloop.first %},{%endif%}
-                                <i>{{ like.author.username }}</i>
+                                {% if not like.is_archive %}
+                                    <i>{{ like.author.username }}</i>
+                                    {% if not forloop.last %},{%endif%}
+                                {% endif %}
                             {% empty %}
                                 пока никому
                             {% endfor %}

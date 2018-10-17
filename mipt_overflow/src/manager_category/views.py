@@ -11,6 +11,8 @@ from django.core.cache import caches
 from like.models import Like
 from django.db.models import Q
 
+from jsonrpc import jsonrpc_method
+
 cache = caches['default']
 
 def category_list(request):

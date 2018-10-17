@@ -25,4 +25,10 @@ urlpatterns = [
         SignupView.as_view(),
         name='register'
     ),
+
+    url(
+        r'^get_file/(?P<key>\w+)/$',
+        get_file,
+        name='get_file'
+    )
 ]
